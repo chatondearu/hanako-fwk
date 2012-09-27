@@ -1,0 +1,39 @@
+###
+# SERVER CONFIGURATION
+###
+
+# Server do following symlinks
+ Options +FollowSymlinks
+# don't show content dir
+ Options -Indexes
+
+
+###
+# REDIRECTION
+###
+
+#Set Base of rewratting and redirection
+RewriteBase /kiwa/
+SetEnv HTTP_ROOT /kiwa/
+
+# Activating rewritting module :
+RewriteEngine on
+
+# Errors rewritting
+ErrorDocument 503 pages/error/error-503.html
+ErrorDocument 400 pages/error/error-400.html
+ErrorDocument 401 pages/error/error-401.html
+ErrorDocument 403 pages/error/error-403.html
+ErrorDocument 500 pages/error/error-500.html
+ErrorDocument 404 pages/error/error-404.html
+
+#Services
+RewriteRule ^services/([a-z0-9/]+)\.html$  init.php?service=$1 [L]
+
+#Index
+RewriteRule ^$  init.php?page=index [L]
+RewriteRule ^([a-z0-9/]+)\.html$  init.php?page=$1 [L]
+#Demande de déconnection
+RewriteRule ^([a-z0-9/]+)-deco\.html$  init.php?page=$1&deco [L]
+
+

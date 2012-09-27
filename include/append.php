@@ -1,0 +1,1 @@
+<?php/* * Inclusion de ressources html (Footer si besoin) */if( PAGE ){    include 'include/html_append_front.php';}?>

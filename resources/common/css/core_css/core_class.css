@@ -1,0 +1,32 @@
+/***
+* POSITIONEMENT
+***/
+
+/*Class permetant la Gestion des flaot dans le dom*/
+.fr{float: right;}
+.fl{float: left;}
+.clb{clear: both;}
+.cll{clear: left;}
+.clr{clear: right;}
+
+/*Class permetant la gestion des Absolut dans le dom*/
+.abs{position:absolute;}
+.zi0{z-index:0;}
+.zi2{z-index:2;}
+.zi3{z-index:3;}
+.zi4{z-index:4;}
+.zi5{z-index:5;}
+.zi6{z-index:6;}
+.zi7{z-index:7;}
+.zi8{z-index:8;}
+.zi9{z-index:9;}
+.zih{z-index:9999;}
+
+/*Pictogramme et images*/
+.picto{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    background: url('../img/Icons-16px.png') no-repeat -308px -28px;
+    line-height: 32px;
+}
