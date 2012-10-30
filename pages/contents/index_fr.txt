@@ -1,3 +1,0 @@
-parameter.menu.item2=Paramètreparameter.menu.item=Paramètre
-
-parameter.menu.item=Paramètre

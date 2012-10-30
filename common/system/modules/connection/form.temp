@@ -1,0 +1,7 @@
+<form id="mod_connection" action="" method="post">
+    <label for="login">Login </label>
+    <input id="login" type="text" name="mod_connection_login" value="keyadmin" />
+    <label for="mdp">Password</label>
+    <input id="mdp" type="password" name="mod_connection_password" value="keyshopping" />
+    <input id="submit" type="submit" name="mod_connection_connection" value="submit" />
+</form>
