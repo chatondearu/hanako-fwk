@@ -1,0 +1,1 @@
+<?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');class controller extends hnk_Controller{    public function init(){        echo 'HOME';        $this->show('index');    }    public function test(){        echo 'TEST';    }}

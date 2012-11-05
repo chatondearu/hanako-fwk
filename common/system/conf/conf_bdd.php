@@ -10,7 +10,7 @@ define("DATABASE_PASSWORD","");
 define("DATABASE_TYPE","mysql");
 define("DATABASE_CHAR_SEPARATOR","_");
 
-define("BASE_TAG","hanako_");
+define("DATABASE_PREFIX","hanako_");
 
 ///Constante environement
 define("FORMAT_DATE_BDD",'Y-m-d H:i:s');

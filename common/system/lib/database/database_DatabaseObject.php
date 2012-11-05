@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
 include('database_Database_'.DATABASE_TYPE.'.php');
 

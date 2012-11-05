@@ -41,7 +41,6 @@ class module_Init {
      * <p> Construct instance of class </p>
      *
      * @name module_init::__construct()
-     * @return void
      **/
     public function __construct() {
 
@@ -69,7 +68,7 @@ class module_Init {
      * @return Object
      */
     public function get($name = null){
-        if(key_exists($name,$this->modActivated))
+        if(array_key_exists($name,$this->modActivated))
             return $this->modActivated[$name];
         else{
             if(DEBUG)echo 'Aucun module "'.$name.'" trouvé';

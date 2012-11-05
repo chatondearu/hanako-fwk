@@ -1,6 +1,6 @@
 <?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
-$&GeneratedTime;
+$GeneratedTime;
 
 function getGeneratedTime($type){
     global $GeneratedTime;
