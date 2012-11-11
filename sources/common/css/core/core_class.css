@@ -1,0 +1,112 @@
+/***
+* POSITIONEMENT
+***/
+
+/*Class permetant la Gestion des flaot dans le dom*/
+.fr{float: right;}
+.fl{float: left;}
+.clb{clear: both;}
+.cll{clear: left;}
+.clr{clear: right;}
+
+/*Class to fix position on absolute*/
+.top{top:0;}
+.bottom{bottom:0;}
+.left{left:0;}
+.right{right:0;}
+
+/*Styling border effect*/
+[class^="brd"],
+[class*=" brd"]{
+    border: 1px solid #595959;
+}
+[class^="brd1"],
+[class*=" brd1"]{
+    border: 3px solid #595959;
+}
+[class^="brd2"],
+[class*=" brd2"]{
+    border: 5px solid #595959;
+}
+
+[class^="brd"][class*="-top"],
+[class*=" brd"][class*="-top"],
+[class^="brd"][class*="-bottom"],
+[class*=" brd"][class*="-bottom"]{
+    border-left: 0;
+    border-right: 0;
+}
+
+[class^="brd"][class*="-bottom"],
+[class*=" brd"][class*="-bottom"]{
+    border-top: 0;
+}
+
+[class^="brd"][class*="-top"],
+[class*=" brd"][class*="-top"]{
+    border-bottom: 0;
+}
+
+[class^="brd"][class*="-right"],
+[class*=" brd"][class*="-right"],
+[class^="brd"][class*="-left"],
+[class*=" brd"][class*="-left"]{
+    border-top: 0;
+    border-bottom: 0;
+}
+
+[class^="brd"][class*="-right"],
+[class*=" brd"][class*="-right"]{
+    border-left: 0;
+}
+
+[class^="brd"][class*="-left"],
+[class*=" brd"][class*="-left"]{
+    border-right: 0;
+}
+
+/*Default color on borders*/
+
+[class^="brd"].red,
+[class*=" brd"].red{border-color: #e8513b;}
+
+[class^="brd"].blue,
+[class*=" brd"].blue{border-color: #2bb9d3;}
+
+[class^="brd"].green,
+[class*=" brd"].green{border-color: #4bd833;}
+
+/*Class permetant la gestion des Absolut dans le dom*/
+.abs{position:absolute;}
+.zi0{z-index:0;}
+.zi2{z-index:2;}
+.zi3{z-index:3;}
+.zi4{z-index:4;}
+.zi5{z-index:5;}
+.zi6{z-index:6;}
+.zi7{z-index:7;}
+.zi8{z-index:8;}
+.zi9{z-index:9;}
+.zih{z-index:9999;}
+
+/*Pictogramme et images*/
+.picto{
+    display:inline-block;
+    width:16px;
+    height:16px;
+    background: url('../img/Icons-16px.png') no-repeat -308px -28px;
+    line-height: 32px;
+}
+
+/*Box*/
+.box{
+    position: absolute;
+    padding: 5px;
+    margin: 15px;
+
+    color: #fff;
+    font-size: 9px;
+    font-weight: normal;
+
+    background-color: rgba(0,0,0,0.4);
+}

@@ -16,19 +16,6 @@ ini_set('display_errors', 1);
 ini_set('error_reporting', 2047);
 ini_set('include_path','.:'.SITE);
 
-
-//TODO commentaire à supprimer avnt prod
-echo "<p>
-        SERVER_PATH :: '".HOST."'<br/>
-        URI :: '".URI."'<br/>
-        URL :: '".URL."'<br/>
-        QUERY :: '".QUERY."'<br/>
-        SELF :: '".SELF."'<br/>
-        BASEROOT :: '".BASEROOT."'<br/>
-        HANAKO_BASEROOT :: '".HANAKO_BASEROOT."'<br/>
-    </p>";
-//TODO FIN
-
 /*
  * ADD ALL BASIC CORE FILES TO HANAKO
  */
@@ -40,6 +27,16 @@ include_once HANAKO_SYSTEM.'/core/autoload.php';
 
 
 //Including Core function
+
+//Start database connection
+if( defined('BASE_TAG') && BASE_TAG )
+    include_once HANAKO_SYSTEM.'/core/database.php';
+//Start module gesture
+include_once HANAKO_SYSTEM.'/core/modules.php';
+//Init template system and functions.
+include_once HANAKO_SYSTEM.'/core/template.php';
+//Get All Helpers functions
+include_once HANAKO_SYSTEM.'/core/helpers.php';
 
 /**
  * hnk_show_error()
@@ -57,12 +54,7 @@ function hnk_show_error($set){
     }
 }
 
-//Start database connection
-if( defined('BASE_TAG') && BASE_TAG )
-    include_once HANAKO_SYSTEM.'/core/database.php';
 
-//Start module gesture
-include_once HANAKO_SYSTEM.'/core/modules.php';
 
 /*
  * PARSE DATA IN URI AND CONSTRUCT PAGE WITH CONTROLER
@@ -106,11 +98,8 @@ include_once HANAKO_SYSTEM.'/core/modules.php';
     if(file_exists(SITE_CONTROLS.'/'.$hnk_handler_dir.HANAKO_EXT_PHP)){
 
         require_once(SITE_CONTROLS.'/'.$hnk_handler_dir.HANAKO_EXT_PHP);
-        $hnk_init_control = new controller();//We lauch control
+        $hnk_init_control = new Controller();//We lauch control
         $hnk_init_control->{$hnk_caller}();
 
     }else
         hnk_show_error(404);
-
-
-echo 'Généré en '.getGeneratedTime('stop');

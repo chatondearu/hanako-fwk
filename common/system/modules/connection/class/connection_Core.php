@@ -101,7 +101,7 @@ class connection_Core {
     }
 
     protected function getTemplate(){
-        $temp = file(MODULES_PATH.'connection/form.temp');
+        $temp = file(HANAKO_MODULES.'/connection/form.temp');
         $this->template = $temp;
         $parseTemp = '';
         foreach($temp as $line){

@@ -32,9 +32,9 @@ class contents_Core {
         //TODO à faire après modification du core database
     }
 
-    private function getAllFromTxtFile(){
+    private function getAllFromTxtFile($name){
         //TODO rajouter la gestion de skins (attente module de skins)
-        $pathFile = $this->getFileName();
+        $pathFile = $this->getFileName($name);
         if(file_exists($pathFile))
             $temp = file($pathFile);
         else{//TODO generer une erreur
@@ -50,14 +50,14 @@ class contents_Core {
         return true;
     }
 
-    private function getFileName(){
+    private function getFileName($view){
         if(USE_SKIN)
-            if(SKIN !== 'default')
-                return PAGES_PATH.'contents/'.PAGE.'_'.$this->language->get().'_'.SKIN.'.txt';
+            if(DEFAULT_SKIN !== 'default')
+                return SITE_CONTENTS.'//'.$view.'_'.$this->language->get().'_'.DEFAULT_SKIN.'.txt';
             else
-                return PAGES_PATH.'contents/'.PAGE.'_'.$this->language->get().'.txt';
+                return SITE_CONTENTS.'/'.$view.'_'.$this->language->get().'.txt';
         else
-            return PAGES_PATH.'contents/'.PAGE.'_'.$this->language->get().'.txt';
+            return SITE_CONTENTS.'/'.$view.'_'.$this->language->get().'.txt';
     }
 
     private function setThemes($txt){
@@ -67,8 +67,12 @@ class contents_Core {
         return $txt;
     }
 
-    public function get($label = false){
-        $this->getAllFromTxtFile();
+    public function get($name){
+        $this->getAllFromTxtFile($name);
+            return $this->page_content;
+    }
+
+    public function get_line($label = false){
         if($label)
             if(USE_TEMPLATE)
                 return $this->setThemes($this->page_content[$label]);

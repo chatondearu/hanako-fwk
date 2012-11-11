@@ -55,7 +55,7 @@ class module_Init {
      * @return void
      */
     public function require_mod($name){
-        require_once(MODULES_PATH.$name.'/init_mod_'.$name.'.php');
+        require_once(HANAKO_MODULES.'/'.$name.'/init_mod_'.$name.HANAKO_EXT_PHP);
         eval('$this->modActivated[$name]= $mod_'.$name.';');
     }
 
@@ -72,6 +72,22 @@ class module_Init {
             return $this->modActivated[$name];
         else{
             if(DEBUG)echo 'Aucun module "'.$name.'" trouvé';
+            return false;
+        }
+    }
+
+    /**
+     *   isInit
+     *  <p> renvois le core d'un module <p>
+     *
+     * @name module_init::isInit()
+     * @param  $name
+     * @return Bool
+     */
+    public function isInit($name = null){
+        if(array_key_exists($name,$this->modActivated))
+            return true;
+        else{
             return false;
         }
     }

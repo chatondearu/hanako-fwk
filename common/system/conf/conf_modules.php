@@ -1,10 +1,10 @@
 <?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
 /*
- * INITIALIZATION MODULES
+ * INITIALIZATION DEFAULT MODULES
  */
+
 //connection module
-$mods->require_mod('connection');
+$hnk_mods->require_mod('connection');
 //contents module
-$mods->require_mod('contents');
-$mod_contents = $mods->get('contents');
+$hnk_mods->require_mod('contents');

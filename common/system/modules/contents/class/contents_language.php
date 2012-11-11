@@ -31,7 +31,7 @@ class contents_Language {
 	 * <p> Initialise language </p>
 	 *
 	 * @name module_Contents_core::__construct()
-	 * @return void
+	 * @return bool
 	 **/
     public function initLanguage($lang = null){
         if(!is_null($lang))
@@ -54,7 +54,7 @@ class contents_Language {
 	 * <p> get language label  </p>
 	 *
 	 * @name module_Contents_core::get()
-	 * @return void
+	 * @return string
 	 **/
     public function get(){
         return $this->initLang;
@@ -66,7 +66,7 @@ class contents_Language {
 	 * <p>  set language label  </p>
 	 *
 	 * @name module_Contents_core::set()
-	 * @return void
+	 * @return bool
 	 **/
     public function set($lang){
         $this->initLanguage($lang);
