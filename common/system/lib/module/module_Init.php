@@ -56,7 +56,7 @@ class module_Init {
      */
     public function require_mod($name){
         require_once(HANAKO_MODULES.'/'.$name.'/init_mod_'.$name.HANAKO_EXT_PHP);
-        eval('$this->modActivated[$name]= $mod_'.$name.';');
+        $this->modActivated[$name]= ${'mod_'.$name};
     }
 
     /**

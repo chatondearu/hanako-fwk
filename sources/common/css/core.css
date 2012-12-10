@@ -1,3 +1,9 @@
 
+/* Import the Font from Google Font*/
+@import url(http://fonts.googleapis.com/css?family=Roboto:regular,medium,thin,italic,mediumitalic,bold);
+@import url(http://fonts.googleapis.com/css?family=Iceland);
+
 @import "core/core_dom.css";
 @import "core/core_class.css";
+@import "core/core_hexa.css";
+@import "core/core_repsonsive.css";

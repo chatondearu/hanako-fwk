@@ -1,8 +1,7 @@
 <div id="content">
-    <h2>Je suis Index</h2>
+    <h2><?=mod_c('index.title')?></h2>
 </div>
 
-
 <div id="footer">
-    <div><?=mod_c('footer')?> <?=getGeneratedTime('stop')?> secondes</div>
+    <div><?=mod_c('index.footer')?> <?=getGeneratedTime('stop')?> secondes</div>
 </div>

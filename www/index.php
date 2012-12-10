@@ -5,12 +5,16 @@
  * CONFIGURATION MODE
  * */
 
-define("DEBUG",false);
+
+// Use HTTP Strict Transport Security to force client to use secure connections only
+$use_sts = true;
+
+define("DEBUG",true);
 
 define('CONSTRUCTION_PAGE','construction.html');
 
 /* Administrateur */
-define('WEBMASTER','rlienard@web-softcity.com');
+define('WEBMASTER','me@rlienard.fr');
 
 
 /*
@@ -34,13 +38,16 @@ define('DEFAULT_CONTROL','home');
 
 /* custom */
 define('DEFAULT_SKIN','default');
-define('SITE_CHARSET','UTF-8');
+define('SITE_CHARSET','utf-8');
 
 
 /*
 * SETTINGS HANAKO
 * Don't touch if you don't need changes here
 */
+
+//TODO faire un module de gestion des CSP
+//header("Content-Security-Policy: default-src 'self' http://src.rlienard.fr http://*.rlienard.fr http://rlienard.fr; script-src 'self' https://apis.google.com http://platform.twitter.com  https://api.twitter.com https://plusone.google.com https://clients6.google.com http://src.rlienard.fr; img-src 'self' http://*.rlienard.fr");
 
 if(DEFAULT_CONTROL == 'index') exit('You can\'t use "index" has default value for DEFAULT_CONTROL in your index file');
 
@@ -61,4 +68,4 @@ define("QUERY",$_SERVER['QUERY_STRING']);
 
 
 //Launch hanako
-include_once(HANAKO_SYSTEM.'/core/Hanako.php');
+require_once(HANAKO_SYSTEM.'/core/Hanako.php');

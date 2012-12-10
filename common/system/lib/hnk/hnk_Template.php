@@ -1,6 +1,6 @@
 <?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
-class hnk_Template{
+class hnk_Template {
 
     /*~*~*~*~*~*~*~*~*~*~*/
     /*  1. proprieties   */
@@ -33,6 +33,12 @@ class hnk_Template{
 
     /**
      * @var (String)
+     * @desc schema of page reference for Google
+     */
+    protected $schema = null;
+
+    /**
+     * @var (String)
      * @desc title to show in template.
      */
     protected $title = null;
@@ -48,12 +54,24 @@ class hnk_Template{
      * @desc description to show in template.
      */
     protected $description = null;
+    /**
+     * @var (String)
+     * @desc description to show in template.
+     */
+    protected $image = null;
 
     /**
      * @var (String)
      * @desc description to show in template.
      */
     protected $keywords = null;
+
+
+    /**
+     * @var (String)
+     * @desc style of Page to show in template.
+     */
+    protected $style = null;
 
     /**
      * @var (String)
@@ -84,13 +102,12 @@ class hnk_Template{
      *
      */
     public function toHtml($caller){
-        if(get_class($caller) == 'Controller')
         $this->caller = $caller;
 
         //récupération de la config du template
         $path = HANAKO_TEMPLATE.'/'.$this->ref_tpl.'/src/default'.HANAKO_EXT_PHP; //TODO change for other of "default"
         if(file_exists($path)){
-            include $path;
+            require_once $path;
             $this->ref_compo = $hnk_tpl_component;
         }
 
@@ -104,7 +121,7 @@ class hnk_Template{
         //recupèration du template
         $path = HANAKO_TEMPLATE.'/'.$this->ref_tpl.'/html'.HANAKO_EXT_PHP;
         if(file_exists($path)){
-            include $path;
+            require_once $path;
         }
     }
 
@@ -148,7 +165,11 @@ class hnk_Template{
                         ${$dataName}=$value;
                     }
                     //include content
-                    include $path;
+                    $key = str_replace('/',' ',$key);
+
+                    echo '<!-- START '.$key.' -->';
+                    require $path;
+                    echo '<!-- END '.$key.' -->';
                 }
             }
             return $this->{$name};

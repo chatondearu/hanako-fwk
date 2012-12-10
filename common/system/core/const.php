@@ -32,5 +32,9 @@ define("SRC_IMG",SRC_COMMON."/img");
 define("SRC_CSS",SRC_COMMON."/css");
 
 /// Librarys version
-define("JQUERY","jquery/jquery-1.7.1.min.js");
+define("JQUERY_VERSION","1.7.1.min");
+define("JQUERY","jquery/jquery-".JQUERY_VERSION.".js");
+define("MODERNIZR_VERSION","custom.07465");
+define("MODERNIZR","modernizr/modernizr.".MODERNIZR_VERSION.".js");
+
 define("JQUERYUI","1.8.18.custom");

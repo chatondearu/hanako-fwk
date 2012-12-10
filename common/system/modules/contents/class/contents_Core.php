@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
 class contents_Core {
 

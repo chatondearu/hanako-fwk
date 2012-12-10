@@ -3,6 +3,7 @@
 /// Connection BDD constantes
 
 define("DATABASE_SERVER","localhost");
+define("DATABASE_PORT","3306");
 define("DATABASE_LOGIN","root");
 define("DATABASE_PASSWORD","");
 

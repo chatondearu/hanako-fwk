@@ -1,11 +1,4 @@
 <?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
-/**
- * Created by JetBrains PhpStorm.
- * User: romainlienard
- * Date: 01/11/11
- * Time: 18:42
- * To change this template use File | Settings | File Templates.
- */
 
 class database_database {
 

@@ -1,1 +1,2 @@
-footer=HANAKO powa en
+index.title=View bien chargé
+index.footer=HANAKO powa en

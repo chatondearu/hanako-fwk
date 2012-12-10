@@ -1,23 +1,5 @@
 <?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
-
-/**
- *
- * détail
- *
- * <p>***</p>
- *
- * @name me_member
- * @author Romain Lienard <rlienard@keyneosoft.fr>
- * @http://keyneosoft.com
- * @copyright Romain Lienard Keyneosoft 2011
- * @version 0.0.0
- * @package me_member
- * @date: 23/04/12
- * @time: 11:01
- *
- **/
-
 class database_Member {
 
 

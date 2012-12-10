@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><hash><request>/1/statuses/user_timeline.xml?count=5&amp;include_entities=true&amp;include_rts=true&amp;screen_name=Sxmcrow</request><error>Rate limit exceeded. Clients may not make more than 150 requests per hour.</error></hash>

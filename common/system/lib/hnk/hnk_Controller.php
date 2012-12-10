@@ -1,6 +1,6 @@
 <?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
-class hnk_Controller{
+abstract class hnk_Controller{
 
     /*~*~*~*~*~*~*~*~*~*~*/
     /*  1. proprieties   */
