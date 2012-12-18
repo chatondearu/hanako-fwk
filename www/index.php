@@ -68,4 +68,4 @@ define("QUERY",$_SERVER['QUERY_STRING']);
 
 
 //Launch hanako
-require_once(HANAKO_SYSTEM.'/core/Hanako.php');
+require_once(HANAKO_SYSTEM.'/core/hanako.php');
