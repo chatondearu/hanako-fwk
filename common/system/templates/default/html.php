@@ -29,7 +29,7 @@
         <link rel="apple-touch-icon" sizes="72x72" href="<?=hnk_tpl_comp('path.favicon')?>/apple-touch-icon-72x72-precomposed.png" />
         <link rel="apple-touch-icon" sizes="114x114" href="<?=hnk_tpl_comp('path.favicon')?>/apple-touch-icon-114x114-precomposed.png" />
 
-        <link rel="canonical" href="http://rlienard.fr/">
+        <link rel="canonical" href="<?=URL?>">
         <!--Ressources Ress-->
         <?=hnk_tpl_comp('styles')?>
         <?=hnk_tpl('style')?>
