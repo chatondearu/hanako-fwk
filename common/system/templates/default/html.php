@@ -3,7 +3,7 @@
     <head>
         <title><?php echo hnk_tpl('title')?></title>
         <!--<base href="<?php echo URL; ?>" target="_self"/>-->
-        <meta http-equiv="Content-Type" Content="text/html; charset=<?php echo SITE_CHARSET?>">
+        <meta charset="<?php echo SITE_CHARSET?>">
 
         <meta itemprop="name" name="name" content="<?php echo hnk_tpl('name')?>">
         <meta itemprop="description" name="description" content="<?php echo hnk_tpl('description')?>">

@@ -32,6 +32,8 @@ require_once HANAKO_SYSTEM.'/core/autoload.php';
 
 //load conf
 
+//Init Header class
+$hnk_headers = new header_Syteme();
 
 //Including Core function
 

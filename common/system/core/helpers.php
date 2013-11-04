@@ -32,7 +32,7 @@ function gen_style($path,$medias='screen'){
 
 function gen_script($path,$async=false){
     if(is_string($path)){
-        return '<script src="'.$path.'" language="javascript" type="text/javascript" '.(($async)?'async':null).'></script>';
+        return '<script src="'.$path.'" type="text/javascript" '.(($async)?'async':null).'></script>';
     }elseif(DEBUG) return 'ERROR ::: no string ::: '.$path;
     return false;
 }

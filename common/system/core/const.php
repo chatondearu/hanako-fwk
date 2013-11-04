@@ -50,7 +50,7 @@ define("MODERNIZR_VERSION","custom.07465");
 define("MODERNIZR","modernizr/modernizr.".MODERNIZR_VERSION.".js");
 
 
-define("JELLYBOOT", "http://labo.rlienard.fr/jellyboot");
+define("JELLYBOOT", "http://labo.rlienard.fr/jellyboot/bin");
 
 define("JQUERYUI","1.8.18.custom");
 
