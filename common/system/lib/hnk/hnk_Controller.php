@@ -96,4 +96,13 @@ abstract class hnk_Controller{
     protected function get_view($name='home'){
         return (isset($this->views[$name]))? $this->views[$name]:false;
     }
+
+    /**
+     * set_Template
+     */
+    protected  function set_Template($name){
+        global $hnk_tpl;
+        $this->template = new hnk_Template($name);
+        $hnk_tpl = $this->template;
+    }
 }

@@ -12,6 +12,7 @@ function hnk_tpl($name){
     $value = $hnk_tpl->get($name);
     if(!is_array($value))
         return $hnk_tpl->get($name);
+    return false;
 }
 
 function hnk_tpl_comp($name){
@@ -20,7 +21,7 @@ function hnk_tpl_comp($name){
         $compo = $hnk_tpl->ref_compo;
         $way = (stripos($name,'.'))? preg_split('/\./',$name):array($name);
 
-        foreach($way as $key=>$val){
+        foreach($way as $val){
             if(array_key_exists($val,$compo)){
                 if(is_string($compo[$val]))
                     return $compo[$val];
@@ -35,6 +36,7 @@ function hnk_tpl_comp($name){
             return join("\n",$compo);
         }
     }
+    return false;
 }
 
 //Functions
@@ -42,4 +44,5 @@ function mod_c($key){
     global $hnk_tpl;
     if(is_string($key))
         return $hnk_tpl->content->get_line($key);
+    return false;
 }

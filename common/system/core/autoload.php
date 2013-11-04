@@ -8,6 +8,8 @@ function classLoaderFromLib($className) {
         require_once( HANAKO_MODULES.'/'.$path.HANAKO_EXT_PHP);
     }elseif(file_exists( SITE_MODELS.'/'.$className.HANAKO_EXT_PHP)){
         require_once( SITE_MODELS.'/'.$className.HANAKO_EXT_PHP);
+    }elseif(file_exists( HANAKO_MODELS.'/'.$className.HANAKO_EXT_PHP)){
+        require_once( HANAKO_MODELS.'/'.$className.HANAKO_EXT_PHP);
     }elseif(file_exists( HANAKO_SYSTEM.'/core/'.$className.HANAKO_EXT_PHP)){
         require_once( HANAKO_SYSTEM.'/core/'.$className.HANAKO_EXT_PHP);
     }elseif(file_exists( $className.HANAKO_EXT_PHP)){

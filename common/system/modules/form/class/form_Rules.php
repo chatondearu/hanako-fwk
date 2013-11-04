@@ -179,7 +179,7 @@ class form_Rules {
      **/
     public function required(){
 
-        $return=($this->required == true)? "ce champ est obligatoire" : false;
+        $return=($this->required == true)? "champ obligatoire" : false;
         return $this->saveErrorMessage($return);
 
     }
@@ -215,7 +215,7 @@ class form_Rules {
         $val = htmlentities($val, ENT_QUOTES , self::CHARS_ENCODE );
 
         if(!ctype_alpha($val)){
-            $this->saveErrorMessage($this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." ne peux contenir de chiffres ou de caractères spéciaux");
+            $this->saveErrorMessage("l'utilisation de chiffres ou de caractères spéciaux est proscrite");
             return false;
         }elseif($test){
             $this->save_result = $val;
@@ -243,7 +243,7 @@ class form_Rules {
         $val = htmlentities($val, ENT_QUOTES , self::CHARS_ENCODE );
 
         if(!ctype_alnum($val)){
-            $this->saveErrorMessage($this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." ne peux contenir de chiffres ou de caractères spéciaux");
+            $this->saveErrorMessage("l'utilisation de caractères spéciaux est proscrite");
             return false;
         }elseif($test){
             $this->save_result = $val;
@@ -266,7 +266,7 @@ class form_Rules {
         $val = trim($val);
         $val = htmlentities($val, ENT_QUOTES , self::CHARS_ENCODE );
         if($this->ifNull($val))
-            $this->saveErrorMessage($this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." ne peut être nul");
+            $this->saveErrorMessage("une valeur est attendue");
         else{
             $test = $this->inMaxMinLenght($val);
             if($test){
@@ -296,7 +296,7 @@ class form_Rules {
             return true;
         }else{
             if(!$test3){
-                $this->saveErrorMessage($this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." doit être de type numérique");
+                $this->saveErrorMessage("seul une valeur numérique est autorisé");
             }
             return false;
         }
@@ -368,20 +368,20 @@ class form_Rules {
         $format = $this->format;
         $separator_only = str_replace(array('m','d','y'),'', $format);
         $separator = $separator_only[0];
-        $regexp = str_replace('mm', '(0?[1-9]|1[0-2])', $format);
+        $regexp = str_replace($separator, "\\" . $separator, $format);
+        $regexp = str_replace('mm', '(0?[1-9]|1[0-2])', $regexp);
         $regexp = str_replace('dd', '(0?[1-9]|[1-2][0-9]|3[0-1])', $regexp);
         $regexp = str_replace('yyyy', '(19|20)?[0-9][0-9]', $regexp);
-        $regexp = str_replace($separator, "\\" . $separator, $regexp);
 
         if(preg_match('/'.$regexp.'\z/', $val)){
-            list($dd,$mm,$yy) = @explode("/",$val);
+            list($dd,$mm,$yy) = @explode('-', $this->newFormatDate($val,$separator,'d-m-Y'));
             if ($dd=="" && $mm=="" && $yy==""){
-                $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." n'est pas passée, vérifier le format (".$this->format.")" );
+                $this->saveErrorMessage( "vérifier le format (".$this->format.")" );
                 return false;
             }
-            $stamp = strtotime( "$mm/$dd/$yy" );
+            $stamp = strtotime( "$dd-$mm-$yy" );
             if (!is_numeric($stamp)){
-                $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." n'est pas passée, vérifier le format (".$this->format.")" );
+                $this->saveErrorMessage( "vérifier le format (".$this->format.")" );
                 return false;
             }
             $month = date( 'm', $stamp );
@@ -389,13 +389,13 @@ class form_Rules {
             $year  = date( 'Y', $stamp );
             //echo $day.'/'.$month.'/'.$year;
             if (checkdate($month, $day, $year)){
-                $this->save_result = $day.'/'.$month.'/'.$year;
+                $this->save_result = $val;
                 return true;
             }
-            $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." n'est pas passée correct, vérifier là.");
+            $this->saveErrorMessage("cette date ne peut exister.");
             return false;
         }
-        $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." doit être au format ".$this->format );
+        $this->saveErrorMessage( "vérifier le format (".$this->format.")" );
         return false;
     }
 
@@ -409,19 +409,23 @@ class form_Rules {
      **/
     public function secure_birthday($val){
 
+        $format = $this->format;
+        $separator_only = str_replace(array('m','d','y'),'', $format);
+        $separator = $separator_only[0];
+
         $test = $this->secure_date($val);
         if($test){
             //calcul de l'age et vérification
             $now = time();
-            list($dd,$mm,$yy) = @explode("/",$this->save_result);
-            $stamp = strtotime("$mm/$dd/$yy");
+            list($dd,$mm,$yy) = @explode($separator,$this->newFormatDate($val,$separator,'d-m-Y'));
+            $stamp = strtotime("$dd-$mm-$yy");
             $age = $now - $stamp;
             $age = $age/31536000;
             if($this->inMaxMin($age)){
                 return true;
             }
             $this->saveErrorMessage(null);
-            $this->saveErrorMessage( "Vous êtes concidéré trop jeune pour accéder à ce service.");
+            $this->saveErrorMessage( "Vous êtes concidéré comme trop jeune, vous devez avoir plus de ".$this->min." ans");
         }
         $this->save_result = null;
         return false;
@@ -441,7 +445,7 @@ class form_Rules {
             if(preg_match('#^[\w.-]+@[\w.-]+\.[a-z]{2,6}$#i', $val)){
                 return true;
             }else{
-                $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." n'est pas correcte, veulliez retenter.");
+                $this->saveErrorMessage("le mail n'est pas valide ex:username@domaine.fr");
             }
         }
         return false;
@@ -460,7 +464,7 @@ class form_Rules {
         if($test && ctype_alnum($val) && !is_numeric($val) && !ctype_alpha($val)){
             return true;
         }elseif($test){
-            $this->saveErrorMessage($this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." doit etre de type alpha numérique.");
+            $this->saveErrorMessage("il doit y avoir au moins une lettre et un chiffre");
             return false;
         }
         return false;
@@ -494,11 +498,11 @@ class form_Rules {
         if($this->maxLength == null){return true;}
 
         if( strlen($val) < $this->minLength){
-            $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." doit avoir au moins ".$this->minLength." caractères" );
+            $this->saveErrorMessage("au moins ".$this->minLength." caractères est attendus" );
             return false;
         }else{
             if( strlen($val) > $this->maxLength){
-                $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." doit avoir moins de ".$this->maxLength." caractères" );
+                $this->saveErrorMessage("moins de ".$this->maxLength." caractères est attendus" );
                 return false;
             }else{
                 return true;
@@ -519,16 +523,33 @@ class form_Rules {
         if($this->max == null){return true;}
 
         if( $val < $this->min){
-            $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." doit être supérieur a ".$this->min."." );
+            $this->saveErrorMessage("la valeur doit être supérieur a ".$this->min."." );
             return false;
         }else{
             if( $val > $this->max){
-                $this->saveErrorMessage( $this->tmpByTypes[$this->libelle]["validate"]." ".$this->label." doit être inférieur a ".$this->max."." );
+                $this->saveErrorMessage("la valeur doit être inférieur a ".$this->max."." );
                 return false;
             }else{
                 return true;
             }
         }
+    }
+
+    public function newFormatDate($date,$separator,$format){
+        $f = @explode($separator, $this->format);
+        foreach ($f as $k=>$v) {
+            if($v[0] == "y") {
+                if(strlen($v) > 2) {
+                    $f[$k] = "Y";
+                } else {
+                    $f[$k] = "y";
+                }
+            }
+            if ($v[0] == "d") $f[$k] = "d";
+            if ($v[0] == "m") $f[$k] = "m";
+        }
+        $d = DateTime::createFromFormat($f[0].$separator.$f[1].$separator.$f[2], $date);
+        return $d->format($format);
     }
 
     /**

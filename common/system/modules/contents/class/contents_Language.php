@@ -40,7 +40,9 @@ class contents_Language {
             $_SESSION['mod_language'] = DEFAULT_LANGUAGE;
 
         $this->initLang = $_SESSION['mod_language'];
-        define('__LANGUAGE',$this->initLang);
+
+        if(!defined("__LANGUAGE"))
+            define('__LANGUAGE',$this->initLang);
 
         if(!$this->isInit)
             $this->isInit = true;

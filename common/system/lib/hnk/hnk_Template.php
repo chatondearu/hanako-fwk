@@ -30,6 +30,11 @@ class hnk_Template {
      * @desc NC;
      */
     protected $ref_tpl;
+    /**
+     * @var (String)
+     * @desc NC;
+     */
+    protected $ref_config;
 
     /**
      * @var (String)
@@ -91,11 +96,19 @@ class hnk_Template {
      *
      * @name hnk_Template::__construct()
      **/
-    public function __construct($ref_tpl='default'){
+    public function __construct($ref_tpl='default',$ref_config='default'){
         global $hnk_mods;
         $this->ref_tpl=$ref_tpl;
+        $this->ref_config=$ref_config;
         if($hnk_mods->isInit('contents'))
             $this->content = $hnk_mods->get('contents');
+    }
+
+    public function set_config($name='default'){
+        $this->ref_config=$name;
+    }
+    public function set_template($name='default'){
+        $this->ref_tpl=$name;
     }
 
     /**
@@ -105,7 +118,7 @@ class hnk_Template {
         $this->caller = $caller;
 
         //récupération de la config du template
-        $path = HANAKO_TEMPLATE.'/'.$this->ref_tpl.'/src/default'.HANAKO_EXT_PHP; //TODO change for other of "default"
+        $path = HANAKO_TEMPLATE.'/'.$this->ref_tpl.'/src/'.$this->ref_config.HANAKO_EXT_PHP;
         if(file_exists($path)){
             require_once $path;
             $this->ref_compo = $hnk_tpl_component;

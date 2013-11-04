@@ -56,7 +56,6 @@ class Header {
         }
 
         exit('<meta http-equiv="refresh" content="0; url=' . urldecode(URL.$location) . '"/>'); # | exit('<script>document.location.href=' . urldecode($Str_Location) . ';</script>');
-        return;
 
     }
 

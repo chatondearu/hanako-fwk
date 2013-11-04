@@ -52,6 +52,10 @@ class connection_Core {
         global $form;
         //*** Connection Session Gesture ***//
 
+        if(isset($_GET['hanako_disconnect'])){
+            $this->disconnect();
+        }
+
         if( !isset($_SESSION['connected'])
             || $_SESSION['connected'] == false )
         {//i'm disconnected
@@ -60,10 +64,9 @@ class connection_Core {
             define('__CONNECTED',false);
 
             if( isset($_POST['mod_connection_connection'])){
-
                 if(isset($form)){
-                    $form->rule("mod_connection_username","Pseudo","alphanum",true,25,2);
-                    $form->rule("mod_connection_password","Mot de passe","password",true,20,6);
+                    $form->rule("mod_connection_username","","alphanum",true,25,2);
+                    $form->rule("mod_connection_password","","password",true,20,6);
                     if($form->start()){
                         //We have connection request
                         $this->setConnection($_POST['mod_connection_username'],$_POST['mod_connection_password']);
@@ -76,7 +79,7 @@ class connection_Core {
                     //We have connection request
                     $this->setConnection($_POST['mod_connection_username'],$_POST['mod_connection_password']);
 
-            }//No request to connection so to show form
+            }//No request to connection then we show the form
 
 
             //connection form construction
@@ -97,8 +100,11 @@ class connection_Core {
         $userId = $_SESSION['user'];
         $user = new Users();
         $user->retrieve($userId);
-        if(__CONNECT_IFTYPE)
-            define('__TYPE_USER',$user->getType()->get('constant'));
+        if(__CONNECT_IFTYPE){
+            $user->type->retrieve($user->type_id);
+            define('__TYPE_USER',$user->type->constant);
+            define('__USER',json_encode($user->rs));
+        }
     }
 
     protected function setConnection($username,$mdp){
@@ -106,19 +112,23 @@ class connection_Core {
         $username = $this->secureString($username);
         $mdp = $this->secureString($mdp);
 
-        //prepare user class
-        $user = new Users();
         //check if user username and pass exist and hashing password
         if(__CONNECT_CRYPT_METHOD != '')
-            $mdp = md5(hash(__CONNECT_CRYPT_METHOD,$mdp));
-        if($user->ifUserExist($username,$mdp)){
+            $mdp = hash(__CONNECT_CRYPT_METHOD,$mdp);
+        $mdp = md5($mdp);
+
+        //prepare user class
+        $user = new Users();
+        $user->retrieve_one('username = ?', $username);
+        if($user->exists() && $mdp == $user->password){
             //set session
             $_SESSION['connected'] = true;
-            $_SESSION['user'] = $user->get('id');
-            $_SESSION['username'] = $user->get('username');
+            $_SESSION['user'] = $user->id;
+            $_SESSION['username'] = $user->username;
             if(__CONNECT_IFTYPE){
-                $type_user = $user->getType();
-                $_SESSION['user_type'] = $type_user->get('constant');
+                $user->type->retrieve($user->type_id);
+                $type_user = $user->type;
+                $_SESSION['user_type'] = $type_user->constant;
             }
             header_redirect(HANAKO_BASEROOT);
         }else{
@@ -148,6 +158,11 @@ class connection_Core {
             $parseTemp .=($toJS)?transformToJS($line):$line."\n";
         }
         return $parseTemp;
+    }
+
+    public function disconnect(){
+        session_unset();
+        session_destroy();
     }
 
     /**

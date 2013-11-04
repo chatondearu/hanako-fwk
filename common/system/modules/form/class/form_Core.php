@@ -30,6 +30,8 @@ class form_Core {
     public $isCheck = true;
     //return values
     public $values = array();
+    public $dataWay = null;
+    public $method = 'POST'; //values: POST|DELETE|PUT|GET
 
     private $rules = array();
 
@@ -46,7 +48,10 @@ class form_Core {
      * @param $lib (integer)
      * @return void
      **/
-    public function __construct(){}
+    public function __construct($method = 'POST', $dataWay = null){
+        $this->method = $method;
+        $this->dataWay = $dataWay;
+    }
 
     public function rule(
         $name,
@@ -61,7 +66,7 @@ class form_Core {
     ){
         $this->rules[$name] = new form_Rules(
             $label,
-            $lib,
+            $lib,//type de champ
             $isRequired,
             $maxLength,
             $minLength,
@@ -72,13 +77,18 @@ class form_Core {
     }
 
     public function start(){
-        if( isset($_POST) ){
+        if($this->dataWay == null){
+
+            if($this->method == "get"){
+                $arr = $_GET;
+            } elseif ($this->method == "post") {
+                $arr = $_POST;
+            } else return $this->isCheck;
 
             foreach ($this->rules as $key => $rule) {
 
-                if(isset($_POST[$key]) && $_POST[$key] != ''){
-
-                    if($this->rules[$key]->validate($_POST[$key])){
+                if(isset($arr[$key]) && $arr[$key] != ''){
+                    if($this->rules[$key]->validate($arr[$key])){
                         $this->values[$key] = $this->rules[$key]->save_result;
                     }else{
                         $this->isCheck = false;
@@ -88,10 +98,49 @@ class form_Core {
                     $this->msg = "Tout les champs obligatoires n'ont pas été remplis<br/>";
                     $this->isCheck = false;
                 }
+
             }
 
-            return $this->isCheck;
-        } return $this->isCheck;
+        } else {
+
+            if(is_array($this->dataWay)){
+                foreach ($this->rules as $key => $rule) {
+
+                    if(isset($this->dataWay[$key]) && $this->dataWay[$key] != ''){
+
+                        if($this->rules[$key]->validate($this->dataWay[$key])){
+                            $this->values[$key] = $this->rules[$key]->save_result;
+                        }else{
+                            $this->isCheck = false;
+                        }
+                    }elseif($this->rules[$key]->required()){
+                        //tout les champs obligatoire ne sont pas remplis j'affiche le message correspondant
+                        $this->msg = "Tout les champs obligatoires n'ont pas été remplis<br/>";
+                        $this->isCheck = false;
+                    }
+
+                }
+            } elseif (is_object($this->dataWay)) {
+                foreach ($this->rules as $key => $rule) {
+
+                    if(isset($this->dataWay->{$key}) && $this->dataWay->{$key} != ''){
+
+                        if($this->rules[$key]->validate($this->dataWay->{$key})){
+                            $this->values[$key] = $this->rules[$key]->save_result;
+                        }else{
+                            $this->isCheck = false;
+                        }
+                    }elseif($this->rules[$key]->required()){
+                        //tout les champs obligatoire ne sont pas remplis j'affiche le message correspondant
+                        $this->msg = "Tout les champs obligatoires n'ont pas été remplis<br/>";
+                        $this->isCheck = false;
+                    }
+
+                }
+            }
+
+        }
+        return $this->isCheck;
     }
 
     public function get_rule($name){
@@ -101,6 +150,13 @@ class form_Core {
     public function get_error($name,$prefix=null,$suffix=null){
         if(isset($this->rules[$name]))
         return ($this->rules[$name]->save_error)?$prefix.$this->rules[$name]->save_error.$suffix:false;
+    }
+    public function errors(){
+        $tmp = array();
+        foreach($this->rules as $name=>$rule){
+            $tmp[$name] = $rule->save_error;
+        }
+        return $tmp;
     }
 
     public function set_error($name,$value){

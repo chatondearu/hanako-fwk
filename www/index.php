@@ -14,7 +14,7 @@ define("DEBUG",true);
 define('CONSTRUCTION_PAGE','construction.html');
 
 /* Administrateur */
-define('WEBMASTER','me@rlienard.fr');
+define('WEBMASTER','postmaster@domain.fr');
 
 
 /*
@@ -23,7 +23,7 @@ define('WEBMASTER','me@rlienard.fr');
 
 //if you using DataBase set the name of Base here else set BASE_TAG has false
 define('BASE_TAG',false);
-//define('BASE_TAG','hanako_3');
+//define('BASE_TAG','hanako');
 
 define('BASEROOT','/www');
 
@@ -31,6 +31,7 @@ define('HANAKO_SYSTEM','../common/system');
 
 define('HANAKO_SITE','../common/sites/www');
 
+define('HANAKO_HTTP_SRC','http://src.domain.fr');
 define('HANAKO_SRC','../sources');
 
 //You can't use "index" has default
@@ -53,7 +54,7 @@ if(DEFAULT_CONTROL == 'index') exit('You can\'t use "index" has default value fo
 
 //set Globals
 define("HOST",$_SERVER['HTTP_HOST']);
-define("URL",'http://'.HOST);
+define("URL",'http://'.HOST.BASEROOT);
 
 // Is the system path correct?
 if ( ! is_dir(HANAKO_SYSTEM))
@@ -67,5 +68,13 @@ define('EXT', '.html');
 define("QUERY",$_SERVER['QUERY_STRING']);
 
 
+if(!defined("PHP_SESSION_DISABLED")){
+    if (!isset($_SESSION)) {
+        define("PHP_SESSION_DISABLED",true);
+    }else{
+        define("PHP_SESSION_DISABLED",false);
+    }
+}
+
 //Launch hanako
-require_once(HANAKO_SYSTEM.'/core/hanako.php');
+require_once(HANAKO_SYSTEM.'/core/Hanako.php');

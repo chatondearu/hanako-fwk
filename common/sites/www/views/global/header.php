@@ -1,6 +1,6 @@
 <div class="container">
-    <p><?=gen_img(SRC_IMG.'/logo_hanako.png',array('width'=>200))?></p>
+    <p><?php echo gen_img(SRC_IMG.'/logo_Hanako_inline-normal.png',array('width'=>200))?></p>
     <h1>
-        <?=mod_c('header.title');?> <?=HANAKO_VERSION?>
+        <?php echo mod_c('header.title');?> <?=HANAKO_VERSION?>
     </h1>
 </div>

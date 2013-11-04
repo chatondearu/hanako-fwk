@@ -6,6 +6,8 @@
 
     include_once HANAKO_LIB.'/DataUri'.HANAKO_EXT_PHP;
 
+    include_once HANAKO_LIB.'/SecurAjaxServices'.HANAKO_EXT_PHP;
+
 /**
  * PATH GETTER
  */

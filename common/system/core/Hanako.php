@@ -1,6 +1,6 @@
 <?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
-if(PHP_SESSION_DISABLED){
+if( (defined('PHP_SESSION_DISABLED') && PHP_SESSION_DISABLED) || !defined('PHP_SESSION_DISABLED')){
     session_start();
 }
 
@@ -19,6 +19,7 @@ require_once(HANAKO_SYSTEM.'/core/const.php');
 ini_set('display_errors', 1);
 ini_set('error_reporting', 2047);
 ini_set('include_path','.:'.SITE);
+date_default_timezone_set('Europe/Paris');
 
 /*
  * ADD ALL BASIC CORE FILES TO HANAKO
@@ -34,6 +35,7 @@ require_once HANAKO_SYSTEM.'/core/autoload.php';
 
 //Including Core function
 
+
 //Start database connection
 if( defined('BASE_TAG') && BASE_TAG )
     require_once HANAKO_SYSTEM.'/core/database.php';
@@ -43,6 +45,7 @@ require_once HANAKO_SYSTEM.'/core/modules.php';
 require_once HANAKO_SYSTEM.'/core/template.php';
 //Get All Helpers functions
 require_once HANAKO_SYSTEM.'/core/helpers.php';
+
 
 /**
  * hnk_show_error()
@@ -76,13 +79,14 @@ function hnk_show_error($set){
  */
 
 //get path called to set handler
-if(HANAKO_BASEROOT == '/') //no special path we call the default handler
+if(HANAKO_BASEROOT == '/'){ //no special path we call the default handler
     $hnk_setHandler = array(DEFAULT_CONTROL,'init');
-else{ //we have path and explode it
+}else{ //we have path and explode it
     $hdl = explode('/',str_replace(EXT,'',HANAKO_BASEROOT));
     array_shift($hdl);
     $hnk_setHandler =$hdl;
 }
+
 
 $hnk_handler_dir=$hnk_setHandler[0];
 
@@ -97,12 +101,14 @@ for($i=1,$l=sizeof($hnk_setHandler);$i<$l;$i++){
 //we init the method of handler if exist or set 'init' by default
 $hnk_caller = array_key_exists($i,$hnk_setHandler)? basename($hnk_setHandler[$i],EXT):'init';
 
+
 $args = Array();
 //parcour handler context and search arguments
 for($i++,$l=sizeof($hnk_setHandler);$i<$l;$i++){
     //context is dir ?
     $args[] = $hnk_setHandler[$i];
 }
+$method = $_SERVER['REQUEST_METHOD'];
 
 
 define('HANDLER',$hnk_handler_dir);
@@ -115,7 +121,7 @@ if(file_exists(SITE_CONTROLS.'/'.HANDLER.HANAKO_EXT_PHP)){
     $hnk_init_control = new $className();//We lauch control
     if(method_exists($hnk_init_control,$hnk_caller)){
         header_change('HTTP/1.0 200 OK');
-        $hnk_init_control->{$hnk_caller}($args);
+        $hnk_init_control->{$hnk_caller}($args,$method);
     }else
         hnk_show_error(404);
 

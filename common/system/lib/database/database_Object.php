@@ -19,6 +19,11 @@ class database_Object {
      * <p> Construct instance of class </p>
      *
      * @name database_Object::__construct()
+     * @param $server
+     * @param $login
+     * @param $mdp
+     * @param $base
+     * @param $port
      * @return void
      **/
     public function __construct($server = DATABASE_SERVER, $login = DATABASE_LOGIN, $mdp = DATABASE_PASSWORD, $base = BASE_TAG, $port = DATABASE_PORT) {
@@ -42,6 +47,10 @@ class database_Object {
      * <p> Select rows from database </p>
      *
      * @name database_Object::select()
+     * @param $sql
+     * @param $format
+     * @param $limit
+     * @param $debut
      * @return if format = 1 : Object ; 2 : Array; 3 : Json; 4 : Class;
      **/
     public function select($sql,$format=1,$limit=0,$debut=0){
@@ -137,6 +146,8 @@ class database_Object {
      * <p> Create SQL for Insert query </p>
      *
      * @name database_Object::getSqlInsert()
+     * @param $a
+     * @param $b
      * @return boolean
      **/
     private function getSqlInsert($a,$b){

@@ -82,7 +82,14 @@ class contents_Core {
             return $this->page_content;
     }
 
+    public function set_lang($lg){
+        if(is_string($lg) && strlen($lg) <= 3) {
+            $this->language->set($lg);
+            return true;
+        }
+        return false;
 
+    }
 
     /**
     *   Destructor

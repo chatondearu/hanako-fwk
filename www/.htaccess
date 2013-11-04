@@ -12,6 +12,13 @@ SetEnv PHP_VER 5_TEST
 
  DirectoryIndex index.php
 
+# Setup deflate mode.
+ SetOutputFilter DEFLATE
+ AddOutputFilterByType DEFLATE text/javascript application/javascript text/css application/xhtml+xml text/xml text/html text/plain application/json
+
+# Setup 'sever cache'
+ ExpiresActive on
+ ExpiresDefault "access plus 14 days"
 
 ###
 # REDIRECTION
@@ -28,16 +35,6 @@ RewriteEngine on
 order allow,deny
 deny from all
 </Files>
-
-##Rewrite to www
-#RewriteCond %{HTTP_HOST} ^www.rlienard.fr[nc]
-#RewriteRule ^(.*)$ http://rlienard.fr/$1 [r=301,nc]
-
-
-## REQUIRE SUBDOMAIN ###
-#RewriteCond %{HTTP_HOST} !^$
-#RewriteCond %{HTTP_HOST} !^rlienard\.fr$ [NC]
-#RewriteRule ^/(.*)$ http://rlienard.fr/$1 [L,R=301]
 
 ##Block bad bots
 RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
