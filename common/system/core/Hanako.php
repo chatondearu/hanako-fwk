@@ -24,8 +24,6 @@ date_default_timezone_set('Europe/Paris');
 /*
  * ADD ALL BASIC CORE FILES TO HANAKO
  */
-//Init Header class
-require_once HANAKO_LIB.'/Header.php';
 
 //autoload
 require_once HANAKO_SYSTEM.'/core/autoload.php';
@@ -35,8 +33,29 @@ require_once HANAKO_SYSTEM.'/core/autoload.php';
 //Init Header class
 $hnk_headers = new header_Syteme();
 
-//Including Core function
+function header_redirect($path) {
+    global $hnk_headers;
+    $hnk_headers->redirect($path);
+}
+function header_set($vals) {
+    global $hnk_headers;
+    $hnk_headers->set($vals);
+}
+function header_exec() {
+    global $hnk_headers;
+    $hnk_headers->exec();
+}
+function header_reset() {
+    global $hnk_headers;
+    $hnk_headers->reset();
+}
+function header_change($values) {
+    header_reset();
+    header_set($values);
+    header_exec();
+}
 
+//Including Core function
 
 //Start database connection
 if( defined('BASE_TAG') && BASE_TAG )
@@ -114,6 +133,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 
 define('HANDLER',$hnk_handler_dir);
+define('CALLER',$hnk_caller);
 
 //call and create controller from handler
 if(file_exists(SITE_CONTROLS.'/'.HANDLER.HANAKO_EXT_PHP)){
@@ -121,9 +141,9 @@ if(file_exists(SITE_CONTROLS.'/'.HANDLER.HANAKO_EXT_PHP)){
     require_once(SITE_CONTROLS.'/'.HANDLER.HANAKO_EXT_PHP);
     $className = 'Control_'.HANDLER;
     $hnk_init_control = new $className();//We lauch control
-    if(method_exists($hnk_init_control,$hnk_caller)){
+    if(method_exists($hnk_init_control,CALLER)){
         header_change('HTTP/1.0 200 OK');
-        $hnk_init_control->{$hnk_caller}($args,$method);
+        $hnk_init_control->{CALLER}($args,$method);
     }else
         hnk_show_error(404);
 

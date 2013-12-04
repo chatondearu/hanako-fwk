@@ -79,9 +79,9 @@ class form_Core {
     public function start(){
         if($this->dataWay == null){
 
-            if($this->method == "get"){
+            if($this->method == "GET"){
                 $arr = $_GET;
-            } elseif ($this->method == "post") {
+            } elseif ($this->method == "POST") {
                 $arr = $_POST;
             } else return $this->isCheck;
 

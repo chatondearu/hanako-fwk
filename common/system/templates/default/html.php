@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html itemscope itemtype=http://schema.org/<?php echo hnk_tpl('schema')?>>
+<html itemscope itemtype=http://schema.org/<?php echo hnk_tpl('schema')?> lang='<?php echo __LANGUAGE?>'>
     <head>
         <title><?php echo hnk_tpl('title')?></title>
         <!--<base href="<?php echo URL; ?>" target="_self"/>-->
@@ -9,6 +9,12 @@
         <meta itemprop="description" name="description" content="<?php echo hnk_tpl('description')?>">
         <meta name="keywords" content="<?php echo hnk_tpl('keywords')?>">
         <meta itemprop="image" name="image" content="<?php echo hnk_tpl('image')?>">
+
+        <?php if(CALLER != 'outdate'){ ?>
+        <!--[if lt IE 9]>
+            <meta http-equiv="refresh" content="0;URL='<?php echo URL; ?>outdate'">
+        <![endif]-->
+        <?php } ?>
 
         <!-- Google -->
         <meta name="google" content="notranslate" />

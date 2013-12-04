@@ -105,3 +105,12 @@ RewriteCond %{HTTP_USER_AGENT} ^WWWOFFLE [OR]
 RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [OR]
 RewriteCond %{HTTP_USER_AGENT} ^Zeus
 RewriteRule ^.* - [F,L]
+
+
+# Errors rewritting
+ErrorDocument 503 ../www/error/error-503.html
+ErrorDocument 400 ../www/error/error-400.html
+ErrorDocument 401 ../www/error/error-401.html
+ErrorDocument 403 ../www/error/error-403.html
+ErrorDocument 500 ../www/error/error-500.html
+ErrorDocument 404 ../www/error/error-404.html

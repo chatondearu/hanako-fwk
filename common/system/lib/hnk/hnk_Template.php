@@ -107,6 +107,7 @@ class hnk_Template {
     public function set_config($name='default'){
         $this->ref_config=$name;
     }
+
     public function set_template($name='default'){
         $this->ref_tpl=$name;
     }

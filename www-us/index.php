@@ -25,7 +25,7 @@ define('WEBMASTER','postmaster@domain.fr');
 define('BASE_TAG',false);
 //define('BASE_TAG','hanako_3');
 
-define('BASEROOT','/www-us');
+define('BASEROOT','/');
 
 define('HANAKO_SYSTEM','../common/system');
 
@@ -35,7 +35,7 @@ define('HANAKO_HTTP_SRC','http://src.domain.fr');
 define('HANAKO_SRC','../sources');
 
 //You can't use "index" has default
-define('DEFAULT_CONTROL','home_us');
+define('DEFAULT_CONTROL','home');
 
 /* custom */
 define('DEFAULT_SKIN','default');
@@ -47,11 +47,15 @@ define('SITE_CHARSET','utf-8');
 * Don't touch if you don't need changes here
 */
 
+//TODO faire un module de gestion des CSP
+//header("Content-Security-Policy: default-src 'self' http://src.rlienard.fr http://*.rlienard.fr http://rlienard.fr; script-src 'self' https://apis.google.com http://platform.twitter.com  https://api.twitter.com https://plusone.google.com https://clients6.google.com http://src.rlienard.fr; img-src 'self' http://*.rlienard.fr");
+
 if(DEFAULT_CONTROL == 'index') exit('You can\'t use "index" has default value for DEFAULT_CONTROL in your index file');
 
 //set Globals
 define("HOST",$_SERVER['HTTP_HOST']);
-define("URL",'http://'.HOST);
+define("TLD",substr(HOST, strrpos(HOST, ".")+1));
+define("URL",'http://'.HOST.BASEROOT);
 
 // Is the system path correct?
 if ( ! is_dir(HANAKO_SYSTEM))

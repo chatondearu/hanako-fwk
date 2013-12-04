@@ -25,7 +25,7 @@ define('WEBMASTER','postmaster@domain.fr');
 define('BASE_TAG',false);
 //define('BASE_TAG','hanako');
 
-define('BASEROOT','/www');
+define('BASEROOT','/');
 
 define('HANAKO_SYSTEM','../common/system');
 
@@ -54,6 +54,7 @@ if(DEFAULT_CONTROL == 'index') exit('You can\'t use "index" has default value fo
 
 //set Globals
 define("HOST",$_SERVER['HTTP_HOST']);
+define("TLD",substr(HOST, strrpos(HOST, ".")+1));
 define("URL",'http://'.HOST.BASEROOT);
 
 // Is the system path correct?
@@ -61,7 +62,7 @@ if ( ! is_dir(HANAKO_SYSTEM))
     exit('Hanako n\'a pas été trouvé, verifiez HANAKO_SYSTEM');
 
 define("URI", $_SERVER['SCRIPT_NAME']);
-define("SITE",HOST.URI);
+define("SITE",HOST.BASEROOT);
 
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 define('EXT', '.html');
