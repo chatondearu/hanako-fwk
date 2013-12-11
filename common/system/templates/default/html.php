@@ -50,6 +50,11 @@
 
     </head>
     <body class="preload">
+        <noscript>
+            Pour accéder à toutes les fonctionnalités de ce site, vous devez activer JavaScript.
+            Voici les <a href="http://www.enable-javascript.com/fr/" target="_blank">
+            instructions pour activer JavaScript dans votre navigateur Web</a>.
+        </noscript>
         <?php echo hnk_tpl('contents')?>
 
         <?php echo hnk_tpl_comp('scripts.bottom')?>

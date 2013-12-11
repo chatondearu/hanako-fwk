@@ -1,7 +1,11 @@
 <?php if ( ! defined('HANAKO_SYSTEM')) exit('Accès interdis');
 
 function classLoaderFromLib($className) {
+
+        // set nomenclatured path
     $path = preg_replace('/^([a-z]*)_/', '$1/$1_', $className);
+
+        //get
     if(file_exists( HANAKO_LIB.'/'.$path.HANAKO_EXT_PHP)){
         require_once( HANAKO_LIB.'/'.$path.HANAKO_EXT_PHP);
     }elseif(file_exists( HANAKO_MODULES.'/'.$path.HANAKO_EXT_PHP)){

@@ -28,6 +28,7 @@ define("SITE_JS", SITE_RESS."/js");
 define("SRC_COMMON",HANAKO_SRC."/common");
 define("SRC_SKINS",HANAKO_SRC."/skins/".DEFAULT_SKIN);
 define("SRC_SCRIPTS",HANAKO_SRC."/js");
+define("SRC_PHP",HANAKO_SRC."/php");
 define("SRC_FAVICON",SRC_COMMON."/favicon");
 define("SRC_IMG",SRC_COMMON."/img");
 define("SRC_CSS",SRC_COMMON."/css");

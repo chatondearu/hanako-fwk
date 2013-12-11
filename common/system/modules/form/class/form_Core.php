@@ -45,7 +45,8 @@ class form_Core {
      * <p> Construct instance of class </p>
      *
      * @name form_Core::__construct()
-     * @param $lib (integer)
+     * @param $method (String)
+     * @param $dataWay (Array|Object)
      * @return void
      **/
     public function __construct($method = 'POST', $dataWay = null){

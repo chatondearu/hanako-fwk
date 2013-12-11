@@ -98,6 +98,19 @@ class hnk_Template {
      **/
     public function __construct($ref_tpl='default',$ref_config='default'){
         global $hnk_mods;
+
+        //set default composer;
+        $this->ref_compo = array(
+            'path' => array(
+                'favicon'=>SRC_HTTP_FAVICON.'/www'
+            ),
+            'styles' => array(),
+            'scripts' => array(
+                'top' => array(),
+                'bottom' => array()
+            )
+        );
+
         $this->ref_tpl=$ref_tpl;
         $this->ref_config=$ref_config;
         if($hnk_mods->isInit('contents'))
@@ -117,12 +130,15 @@ class hnk_Template {
      */
     public function toHtml($caller){
         $this->caller = $caller;
+        $hnk_tpl_component = array();
 
         //récupération de la config du template
         $path = HANAKO_TEMPLATE.'/'.$this->ref_tpl.'/src/'.$this->ref_config.HANAKO_EXT_PHP;
+
+        //merge default composer and composer of skin
         if(file_exists($path)){
             require_once $path;
-            $this->ref_compo = $hnk_tpl_component;
+            $this->ref_compo = array_merge_recursive($hnk_tpl_component,$this->ref_compo);
         }
 
         if($this->content){
@@ -132,7 +148,7 @@ class hnk_Template {
             }
         }
 
-        //recupèration du template
+        //get template
         $path = HANAKO_TEMPLATE.'/'.$this->ref_tpl.'/html'.HANAKO_EXT_PHP;
         if(file_exists($path)){
             require_once $path;
