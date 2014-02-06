@@ -44,7 +44,7 @@ define("SRC_HTTP_CSS",SRC_HTTP_COMMON."/css");
 define("JQUERY_VERSION","1.7.1.min");
 define("JQUERY","jquery/jquery-".JQUERY_VERSION.".js");
 define("ANGULAR","angular/angular.js");
-define("ANGULAR_RESOURCE","angular/angular-resource.js");
+define("ANGULAR_MOD","angular/angular-");
 define("MD5","jshash/md5-min.js");
 define("UNDERSCORE","underscore/underscore.js");
 define("MODERNIZR_VERSION","custom.07465");

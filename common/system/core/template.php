@@ -17,19 +17,21 @@ function hnk_tpl($name){
 
 function hnk_tpl_comp($name){
     global $hnk_tpl;
+
     if(is_string($name)){
         $compo = $hnk_tpl->ref_compo;
         $way = (stripos($name,'.'))? preg_split('/\./',$name):array($name);
 
         foreach($way as $val){
             if(array_key_exists($val,$compo)){
-                if(is_string($compo[$val]))
-                    return $compo[$val];
-                elseif(is_array($compo[$val]) )
+                if(is_string($compo[$val])){
                     $compo = $compo[$val];
-            }else
-                return false;
+                    break;
+                }elseif(is_array($compo[$val]))
+                    $compo = $compo[$val];
+            }
         }
+
         if(is_string($compo))
             return $compo;
         elseif(is_array($compo) ){

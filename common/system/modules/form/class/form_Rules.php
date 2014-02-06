@@ -99,6 +99,10 @@ class form_Rules {
                 "required" => "Votre",
                 "validate" => "Votre",
         ),
+        "html" => array(
+                "required" => "Votre",
+                "validate" => "Votre",
+        ),
         "numeric" => array(
                 "required" => "Votre",
                 "validate" => "Votre",
@@ -265,6 +269,30 @@ class form_Rules {
         $val = sprintf("%s",$val);
         $val = trim($val);
         $val = htmlentities($val, ENT_QUOTES , self::CHARS_ENCODE );
+        if($this->ifNull($val))
+            $this->saveErrorMessage("une valeur est attendue");
+        else{
+            $test = $this->inMaxMinLenght($val);
+            if($test){
+                $this->save_result = $val;
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+
+    /**
+     *   Sécurisation d'un type "html"
+     *
+     * <p>  </p>
+     *
+     * @name form_Rules::secure_html()
+     * @return boolean
+     **/
+    public function secure_html($val){
+        $val = sprintf("%s",$val);
+        $val = trim($val);
         if($this->ifNull($val))
             $this->saveErrorMessage("une valeur est attendue");
         else{

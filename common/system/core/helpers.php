@@ -37,7 +37,7 @@ function gen_script($path,$async=false){
     return false;
 }
 
-function gen_img($path,$attr=array('alt'=>null), $isData=true){
+function gen_img($path,$attr=array('alt'=>null), $isData=false){
     if(is_string($path)){
         if( !array_key_exists('alt',$attr) || is_null($attr['alt'])) $attr['alt'] = basename($path);
         if($isData)$path = data_uri($path,'image/png');

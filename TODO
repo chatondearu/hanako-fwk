@@ -1,0 +1,8 @@
+/////////////////////////////////////////////////////////////////
+PROJET HANAKO TODO LIST
+/////////////////////////////////////////////////////////////////
+
+module content/language :
+    - make option for all language in website: show on domain name or tld, or parsing controller with correspondant key
+     example: domain.fr => default FR | domain.com => default EN
+              domain.fr/home?lng=us => show US | domain.fr/home/fr => show FR
