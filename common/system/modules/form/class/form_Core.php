@@ -57,7 +57,7 @@ class form_Core {
     public function rule(
         $name,
         $label = null,
-        $lib = null,
+        $type = null,
         $isRequired = null,
         $maxLength = null,
         $minLength = null,
@@ -67,7 +67,7 @@ class form_Core {
     ){
         $this->rules[$name] = new form_Rules(
             $label,
-            $lib,//type de champ
+            $type,//type de champ
             $isRequired,
             $maxLength,
             $minLength,

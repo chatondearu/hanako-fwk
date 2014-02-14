@@ -102,7 +102,7 @@ class connection_Core {
         $user->retrieve($userId);
         if(__CONNECT_IFTYPE){
             $user->type->retrieve($user->type_id);
-            define('__TYPE_USER',$user->type->constant);
+            define('__TYPE_USER',$user->type->const);
             define('__USER',json_encode($user->rs));
         }
     }
@@ -128,7 +128,7 @@ class connection_Core {
             if(__CONNECT_IFTYPE){
                 $user->type->retrieve($user->type_id);
                 $type_user = $user->type;
-                $_SESSION['user_type'] = $type_user->constant;
+                $_SESSION['user_type'] = $type_user->const;
             }
             header_redirect(HANAKO_BASEROOT);
         }else{

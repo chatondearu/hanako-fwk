@@ -10,23 +10,17 @@ abstract class hnk_Controller{
      * @var (String)
      * @desc name of caller;
      */
-    public $datas = array();
-
-    /**
-     * @var (String)
-     * @desc name of caller;
-     */
     protected $name = null;
 
     /**
-     * @var (String)
-     * @desc name of caller;
+     * @var (Array)
+     * @desc list of views;
      */
-    private $views = array();
+    public $views = array();
 
     /**
-     * @var (String)
-     * @desc name of caller;
+     * @var (Object)
+     * @desc template;
      */
     private $template;
 
@@ -49,24 +43,17 @@ abstract class hnk_Controller{
 
     /**
      *   show
-     *
      * <p> construct html page to call template </p>
-     *
      * @name hnk_Controller::show()
      **/
-    protected function show($context=array(),$tpl_name='default'){
-        $this->template->set($context);
-
-        $this->template->set('contents',$this->views);
-
+    protected function show($info=array()){
+        $this->template->set($info);
         $this->template->toHtml($this);
     }
 
     /**
      *   set_view
-     *
      * <p>Set a news view to views</p>
-     *
      * @name hnk_Controller::set_view()
      **/
     protected function set_view($name='home',$data = array()){
@@ -75,26 +62,17 @@ abstract class hnk_Controller{
             $name = ($name[0] == '/')?$name:'/'.$name;
         else return false;
 
-        if(is_array($data)){
-            $this->datas[$name] = $data;
-        }
-
         if(file_exists(SITE_VIEWS.$name.HANAKO_EXT_PHP)){
-            $this->views[$name] = SITE_VIEWS.$name.HANAKO_EXT_PHP;
+            $this->views[$name] = array();
+            if(is_array($data)){
+                $this->views[$name]['datas'] = $data;
+            }else{
+                $this->views[$name]['datas'] = false;
+            }
+            $this->views[$name]['path'] = SITE_VIEWS.$name.HANAKO_EXT_PHP;
         }else return false;
 
         return true;
-    }
-
-    /**
-     *   get_view
-     *
-     * <p>Set a news view to views</p>
-     *
-     * @name hnk_Controller::get_view()
-     **/
-    protected function get_view($name='home'){
-        return (isset($this->views[$name]))? $this->views[$name]:false;
     }
 
     /**

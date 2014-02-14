@@ -30,7 +30,7 @@ class form_Rules {
     * @var (String)
     * @desc ;
     */
-    public $libelle;
+    public $type;
 
     /**
     * @var (String)
@@ -152,7 +152,7 @@ class form_Rules {
      **/
     public function __construct(
         $label = null,
-        $lib = null,
+        $type = null,
         $isRequired = null,
         $maxLength = null,
         $minLength = null,
@@ -163,7 +163,7 @@ class form_Rules {
         //récupération des données relative à aux sécurité du champs et ces informations.
         $this->required =($isRequired != null)?  $isRequired : null ;
         $this->label = ($label != null)?$label : null ;
-        $this->libelle = ($lib != null)?$lib : null ;
+        $this->type = ($type != null)?$type : null ;
         $this->maxLength = ($maxLength != null)?$maxLength : null ;
         $this->minLength = ($minLength != null)?$minLength : null ;
         //for numeric or integer or birthday
@@ -197,7 +197,7 @@ class form_Rules {
      * @return boolean
      **/
     public function validate($val){
-        $ifValid = $this->{'secure_'.$this->libelle}($val);
+        $ifValid = $this->{'secure_'.$this->type}($val);
         return($ifValid)?$ifValid:false;
     }
 

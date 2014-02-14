@@ -6,7 +6,7 @@ class User_types extends hnk_Model {
 		parent::__construct('id','user_types','hnk_getDB');
 
 		$this->rs['id'] = ''; //int(11)
-		$this->rs['libelle'] = ''; //varchar(45)
-		$this->rs['constant'] = ''; //varchar(2)
+		$this->rs['label'] = ''; //varchar(45)
+		$this->rs['const'] = ''; //varchar(2)
 	}
 }

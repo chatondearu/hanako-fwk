@@ -16,12 +16,12 @@ define('HANAKO_EXT_PHP','.php');
 define("HANAKO_LIB",HANAKO_SYSTEM."/lib");
 define("HANAKO_MODULES",HANAKO_SYSTEM."/modules");
 define("HANAKO_MODELS",HANAKO_SYSTEM."/db_models");
-define("HANAKO_TEMPLATE",HANAKO_SYSTEM."/templates");
 
 define("SITE_CONTENTS", HANAKO_SITE."/contents");
 define("SITE_MODELS", HANAKO_SITE."/models");
 define("SITE_CONTROLS", HANAKO_SITE."/controls");
 define("SITE_VIEWS", HANAKO_SITE."/views");
+define("SITE_TEMPLATE",HANAKO_SITE."/templates");
 define("SITE_RESS", HANAKO_SITE."/resources");
 define("SITE_JS", SITE_RESS."/js");
 

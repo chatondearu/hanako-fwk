@@ -23,6 +23,7 @@ class Posts extends hnk_Model {
 		$this->rs['state_id'] = ''; //int(11)
 		$this->rs['type_id'] = ''; //int(11)
 		$this->rs['user_id'] = ''; //int(11)
+		$this->rs['stat_number_views'] = ''; //int(11)
 
         $this->type = new Post_types();
         $this->state = new Post_states();

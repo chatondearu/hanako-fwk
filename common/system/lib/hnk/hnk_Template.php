@@ -10,7 +10,7 @@ class hnk_Template {
      * @var (Array)
      * @desc NC;
      */
-    public $ref_compo = array();
+    private $ref_compo = array();
 
     /**
      * @var (Object)
@@ -22,14 +22,14 @@ class hnk_Template {
      * @var (Object)
      * @desc description to show in template.
      */
-    private $caller;
-
+    private $controller;
 
     /**
      * @var (String)
      * @desc NC;
      */
     protected $ref_tpl;
+
     /**
      * @var (String)
      * @desc NC;
@@ -37,52 +37,10 @@ class hnk_Template {
     protected $ref_config;
 
     /**
-     * @var (String)
-     * @desc schema of page reference for Google
+     * page information
+     * @var array
      */
-    protected $schema = null;
-
-    /**
-     * @var (String)
-     * @desc title to show in template.
-     */
-    protected $title = null;
-
-    /**
-     * @var (String)
-     * @desc name to show in template.
-     */
-    protected $name = null;
-
-    /**
-     * @var (String)
-     * @desc description to show in template.
-     */
-    protected $description = null;
-    /**
-     * @var (String)
-     * @desc description to show in template.
-     */
-    protected $image = null;
-
-    /**
-     * @var (String)
-     * @desc description to show in template.
-     */
-    protected $keywords = null;
-
-
-    /**
-     * @var (String)
-     * @desc style of Page to show in template.
-     */
-    protected $style = null;
-
-    /**
-     * @var (String)
-     * @desc description to show in template.
-     */
-    protected $contents = array();
+    protected $info = array();
 
 
     /*~*~*~*~*~*~*~*~*~*~*/
@@ -111,8 +69,19 @@ class hnk_Template {
             )
         );
 
+        //set default infos/tags
+        $this->info = array(
+            'schema' => '',
+            'title' => '',
+            'name' => '',
+            'description' => '',
+            'image' => '',
+            'keywords' => '',
+        );
+
         $this->ref_tpl=$ref_tpl;
         $this->ref_config=$ref_config;
+
         if($hnk_mods->isInit('contents'))
             $this->content = $hnk_mods->get('contents');
     }
@@ -128,31 +97,99 @@ class hnk_Template {
     /**
      *
      */
-    public function toHtml($caller){
-        $this->caller = $caller;
+    public function toHtml($controller){
+        $this->controller = $controller;
         $hnk_tpl_component = array();
 
         //récupération de la config du template
-        $path = HANAKO_TEMPLATE.'/'.$this->ref_tpl.'/src/'.$this->ref_config.HANAKO_EXT_PHP;
+        $path = SITE_TEMPLATE.'/'.$this->ref_tpl.'/src/'.$this->ref_config.HANAKO_EXT_PHP;
 
         //merge default composer and composer of skin
         if(file_exists($path)){
             require_once $path;
-            $this->ref_compo = array_merge_recursive($hnk_tpl_component,$this->ref_compo);
+            $this->ref_compo = array_replace_recursive($this -> ref_compo, $hnk_tpl_component);
         }
 
+        // Module Content
+        // resolve content from keys
         if($this->content){
-            foreach($this->contents as $key=>$name){
+            foreach($this->controller->views as $key=>$name){
                 $key = ($key[0] == '/')? substr($key,0,strlen($key)):$key;
                 $this->content->get($key);
             }
         }
 
         //get template
-        $path = HANAKO_TEMPLATE.'/'.$this->ref_tpl.'/html'.HANAKO_EXT_PHP;
+        $path = SITE_TEMPLATE.'/'.$this->ref_tpl.'/html'.HANAKO_EXT_PHP;
         if(file_exists($path)){
             require_once $path;
         }
+    }
+
+    private function add_view($name = '', $datas = array(), $path = '', $is_fromController = false){
+
+        if(!$is_fromController){
+
+            if(is_string($name))
+                $name = ($name[0] == '/')?$name:'/'.$name;
+            else return false;
+
+            if(file_exists(SITE_VIEWS.$name.HANAKO_EXT_PHP)){
+                $path = SITE_VIEWS.$name.HANAKO_EXT_PHP;
+            } else {
+                echo 'no template '.$name;
+                return false;
+            }
+        }
+
+        foreach($datas as $dataName=>$value){
+            ${$dataName}=$value;
+        }
+        //contents exist we load all
+        //include content
+        $name = str_replace('/',' ',$name);
+
+        echo '<!-- START '.$name.' -->';
+        require $path;
+        echo '<!-- END '.$name.' -->';
+        return true;
+    }
+
+    private function make_views(){
+        foreach($this->controller->views as $name=>$obj){
+            $this->add_view($name, $obj['datas'], $obj['path'], true);
+        }
+    }
+
+    private function get_compo($name = ''){
+        if(is_string($name)){
+            $compo = $this->ref_compo;
+            $way = (stripos($name,'.'))? preg_split('/\./',$name):array($name);
+
+            foreach($way as $val){
+                if(array_key_exists($val,$compo)){
+                    if(is_string($compo[$val])){
+                        $compo = $compo[$val];
+                        break;
+                    }elseif(is_array($compo[$val]))
+                        $compo = $compo[$val];
+                }
+            }
+
+            if(is_string($compo))
+                return $compo;
+            elseif(is_array($compo) ){
+                return join("\n",$compo);
+            }
+        }
+        return false;
+    }
+
+    private function get_info($name = ''){
+        if(is_string($name)){
+            return $this->info[$name];
+        }
+        return false;
     }
 
     /**
@@ -183,29 +220,6 @@ class hnk_Template {
             }return false;
         }return false;
 
-    }
-
-    public function get($name){
-        //look if get contents
-        if(is_array($this->{$name}) && sizeof($this->{$name})>0 ){
-            foreach($this->{$name} as $key=>$path){
-                if(file_exists($path)){ //contents exist we load all
-                    //for all content we look for datas
-                    foreach($this->caller->datas[$key] as $dataName=>$value){
-                        ${$dataName}=$value;
-                    }
-                    //include content
-                    $key = str_replace('/',' ',$key);
-
-                    echo '<!-- START '.$key.' -->';
-                    require $path;
-                    echo '<!-- END '.$key.' -->';
-                }
-            }
-            return $this->{$name};
-        }
-        //get others values
-        return $this->{$name};
     }
 
 }
